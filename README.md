@@ -157,8 +157,8 @@ Se agregan vistas operativas y de reporte que se apoyan en las tablas existentes
 - **vw_productividad_medico** — Cantidad de turnos por médico y por mes.  
   **Tablas:** `turnos`, `medicos`.
   
-  
-  ## Funciones
+
+## Funciones
   
 - **fn_edad(fecha_nac)** → INT  
   Calcula edad exacta; útil en listados y segmentación. *(No accede a tablas)*
@@ -192,7 +192,7 @@ Se agregan vistas operativas y de reporte que se apoyan en las tablas existentes
   **Tablas:** `pacientes`.
 
 
-  ## Triggers (continuación del modelo)
+## Triggers
 
 - **trg_pacientes_email_ins / trg_pacientes_email_upd** — Normalizan emails a minúsculas y sin espacios.  
   **Objetivo:** evitar duplicados “lógicos” y mantener consistencia de contacto.  
@@ -209,6 +209,7 @@ Se agregan vistas operativas y de reporte que se apoyan en las tablas existentes
 - **trg_facturas_total_ins / trg_facturas_total_upd** — Evitan montos negativos.  
   **Objetivo:** preservar integridad financiera.  
   **Tablas/situaciones:** `facturas` en INSERT/UPDATE.
+
 
 ## TÉCNICO
 
