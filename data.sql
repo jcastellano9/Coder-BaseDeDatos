@@ -76,3 +76,32 @@ INSERT INTO facturas (id_factura, id_paciente, fecha, total) VALUES
 (4,5,'2025-08-08',180000.00),
 (5,8,'2025-08-09',320000.00),
 (6,10,'2025-08-10',120000.00);
+
+
+-- =========================
+-- Turnos (próximos 14 días)
+-- =========================
+INSERT INTO turnos (id_turno, id_paciente, id_medico, fecha, hora, motivo) VALUES
+(101,1,1,DATE_ADD(CURDATE(), INTERVAL 1 DAY),'09:00:00','Control anual'),
+(102,2,2,DATE_ADD(CURDATE(), INTERVAL 1 DAY),'09:30:00','Chequeo retina'),
+(103,3,3,DATE_ADD(CURDATE(), INTERVAL 2 DAY),'10:00:00','Presión intraocular'),
+(104,4,4,DATE_ADD(CURDATE(), INTERVAL 2 DAY),'11:15:00','Molestia corneal'),
+(105,5,5,DATE_ADD(CURDATE(), INTERVAL 3 DAY),'12:00:00','Evaluación palpebral'),
+(106,6,1,DATE_ADD(CURDATE(), INTERVAL 4 DAY),'09:15:00','Ojo seco'),
+(107,7,2,DATE_ADD(CURDATE(), INTERVAL 5 DAY),'10:45:00','Control glaucoma'),
+(108,8,3,DATE_ADD(CURDATE(), INTERVAL 6 DAY),'11:30:00','Topografía corneal'),
+(109,9,4,DATE_ADD(CURDATE(), INTERVAL 7 DAY),'15:00:00','Seguimiento retina'),
+(110,10,5,DATE_ADD(CURDATE(), INTERVAL 8 DAY),'16:30:00','Receta lentes'),
+(111,1,2,DATE_ADD(CURDATE(), INTERVAL 9 DAY),'10:30:00','Fondo de ojo'),
+(112,2,3,DATE_ADD(CURDATE(), INTERVAL 10 DAY),'09:45:00','PIO + OCT'),
+(113,3,4,DATE_ADD(CURDATE(), INTERVAL 11 DAY),'13:00:00','Molestia lagrimal'),
+(114,4,5,DATE_ADD(CURDATE(), INTERVAL 12 DAY),'17:15:00','Consulta general');
+
+-- =========================
+-- Facturas (septiembre)
+-- =========================
+INSERT INTO facturas (id_factura, id_paciente, fecha, total) VALUES
+(101,1,CURDATE(),180000.00),
+(102,2,DATE_ADD(CURDATE(), INTERVAL 1 DAY),95000.00),
+(103,3,DATE_ADD(CURDATE(), INTERVAL 3 DAY),125000.00),
+(104,5,DATE_ADD(CURDATE(), INTERVAL 5 DAY),210000.00);
