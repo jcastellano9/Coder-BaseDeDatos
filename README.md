@@ -7,7 +7,7 @@
 **Autor:** Castellano Joaquín  
 **Tutor:** Alejandro Daniel Di Stefano  
 **Comisión:** 81830  
-**Versión:** 1.0  
+**Versión:** 2.0  
 
 ---
 
@@ -135,14 +135,92 @@ El siguiente diagrama E‑R muestra la estructura lógica de la base de datos (p
 ---
 
 
+## Vistas
+
+Se agregan vistas operativas y de reporte que se apoyan en las tablas existentes.
+
+- **vw_agenda_medico_dia** — Agenda consolidada por turno (fecha, hora, paciente, médico, especialidad, motivo).  
+  **Tablas:** `turnos`, `pacientes`, `medicos`.
+
+- **vw_turnos_proximos** — Turnos a 14 días vista (útil para recordatorios).  
+  **Tablas:** derivada de `vw_agenda_medico_dia`.
+
+- **vw_historial_tratamientos_paciente** — Tratamientos por paciente con duración estimada en días.  
+  **Tablas:** `pacientes`, `tratamientos`.
+
+- **vw_facturacion_mensual** — Total facturado por mes (KPI administrativo).  
+  **Tablas:** `facturas`.
+
+- **vw_pacientes_por_obra_social** — Pacientes agrupados por obra social.  
+  **Tablas:** `obra_sociales`, `pacientes`.
+
+- **vw_productividad_medico** — Cantidad de turnos por médico y por mes.  
+  **Tablas:** `turnos`, `medicos`.
+  
+  
+  ## Funciones
+  
+- **fn_edad(fecha_nac)** → INT  
+  Calcula edad exacta; útil en listados y segmentación. *(No accede a tablas)*
+
+- **fn_nombre_completo(nombre, apellido)** → VARCHAR  
+  Formatea “Apellido, Nombre” para vistas y reportes. *(No accede a tablas)*
+
+- **fn_turno_datetime(fecha, hora)** → DATETIME  
+  Unifica fecha+hora de turnos para ordenar/filtrar. *(No accede a tablas)*
+
+- **fn_total_mes(año, mes)** → DECIMAL  
+  Devuelve lo facturado en el período solicitado. **Tablas:** `facturas`.
+
+
+## Stored Procedures
+
+- **sp_agendar_turno(paciente, médico, fecha, hora, motivo)**  
+  Inserta un turno validando horario permitido (08–19 h) y evitando solapamientos del mismo médico en el mismo horario.  
+  **Tablas:** inserta/consulta `turnos`.
+
+- **sp_cancelar_turno(id_turno)**  
+  Cancela el turno indicado y devuelve filas afectadas.  
+  **Tablas:** `turnos`.
+
+- **sp_registrar_factura(paciente, fecha, total)**  
+  Crea una factura validando montos no negativos; devuelve el ID generado.  
+  **Tablas:** `facturas`.
+
+- **sp_actualizar_datos_paciente(id, email, teléfono)**  
+  Normaliza email a minúsculas y actualiza contacto.  
+  **Tablas:** `pacientes`.
+
+
+  ## Triggers (continuación del modelo)
+
+- **trg_pacientes_email_ins / trg_pacientes_email_upd** — Normalizan emails a minúsculas y sin espacios.  
+  **Objetivo:** evitar duplicados “lógicos” y mantener consistencia de contacto.  
+  **Tablas/situaciones:** `pacientes` en INSERT/UPDATE.
+
+- **trg_trat_fechas_ins / trg_trat_fechas_upd** — Impiden `fecha_fin < fecha_inicio`.  
+  **Objetivo:** asegurar coherencia temporal de tratamientos.  
+  **Tablas/situaciones:** `tratamientos` en INSERT/UPDATE.
+
+- **trg_turnos_chk_ins / trg_turnos_chk_upd** — Validan franja 08–19 h y evitan turnos duplicados por médico/horario.  
+  **Objetivo:** mantener agenda clínica consistente y sin solapamientos.  
+  **Tablas/situaciones:** `turnos` en INSERT/UPDATE.
+
+- **trg_facturas_total_ins / trg_facturas_total_upd** — Evitan montos negativos.  
+  **Objetivo:** preservar integridad financiera.  
+  **Tablas/situaciones:** `facturas` en INSERT/UPDATE.
+
 ## TÉCNICO
 
 ### Script inicial
 
-
 - [*`create_DB.sql`*](create_DB.sql): contiene la creación de las entidades principales del sistema, con sus respectivas claves primarias, foráneas y relaciones.
-
 - [*`data.sql`*](data.sql): incluye la carga inicial de datos relevantes para pruebas.
+- [*`views.sql`*](views.sql): define las **vistas** operativas y de reporte del modelo.
+- [*`funciones.sql`*](funciones.sql): define funciones utilitarias (fn_edad, fn_nombre_completo, fn_turno_datetime, fn_total_mes).
+- [*`stored_procedures.sql`*](stored_procedures.sql): define procedimientos almacenados (sp_agendar_turno, sp_cancelar_turno, sp_registrar_factura, sp_actualizar_datos_paciente).
+- [*`triggers.sql`*](triggers.sql): define triggers de integridad/normalización (emails en pacientes, fechas en tratamientos, agenda en turnos, montos en facturas).
+
 ---
 <p align="center">
   <img src="assets/Coder-House-Logo.png" alt="Logo Coderhouse" height="120" style="margin-right: 40px;"/>
