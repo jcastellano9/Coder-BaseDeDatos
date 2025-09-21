@@ -1,7 +1,7 @@
 <h1 align="center">Proyecto Final – Clínica Oftalmológica 👁️</h1>
 
 <p align="center">
-  <strong>Entrega Nº 1</strong>  
+  <strong>Entrega Final</strong>  
 </p>
 
 **Autor:** Castellano Joaquín  
@@ -256,9 +256,8 @@ Se agregan vistas operativas y de reporte que se apoyan en las tablas existentes
   **Objetivo:** preservar integridad financiera.  
   **Tablas/situaciones:** `facturas` en INSERT/UPDATE.
 
----
 
-### Informes y análisis de datos
+## Informes y análisis de datos
 
 A partir de las vistas y consultas SQL del proyecto se generaron reportes en formato `.csv` (carpeta **informes** del repositorio).  
 Estos reportes brindan una visión cuantitativa de la actividad de la clínica:
