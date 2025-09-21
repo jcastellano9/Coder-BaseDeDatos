@@ -141,8 +141,6 @@ El siguiente diagrama E‑R muestra la estructura lógica de la base de datos (p
 | nombre       | Nombre de la práctica                  | VARCHAR(150)        | —      | NO   |
 | precio_base  | Precio base de la práctica             | DECIMAL(12,2)       | —      | NO   |
 
----
-
 #### `facturas_detalle`
 
 | Campo              | Nombre completo                       | Tipo                | Clave                        | NULL |
@@ -153,8 +151,6 @@ El siguiente diagrama E‑R muestra la estructura lógica de la base de datos (p
 | cantidad           | Cantidad de prácticas                 | INT                 | —                             | NO   |
 | precio_unitario    | Precio unitario aplicado              | DECIMAL(12,2)       | —                             | NO   |
 | subtotal           | Subtotal calculado (cantidad × precio) | DECIMAL(12,2) STORED| —                             | NO   |
-
----
 
 #### `pagos`
 
@@ -167,16 +163,12 @@ El siguiente diagrama E‑R muestra la estructura lógica de la base de datos (p
 | medio_pago | Medio de pago (efectivo, débito, etc.)     | ENUM('efectivo','debito','credito','transferencia','obra_social')    | —     | NO   |
 | estado     | Estado del pago (aplicado, pendiente, etc.)| ENUM('aplicado','pendiente','rechazado')                             | —     | NO   |
 
----
-
 #### `salas`
 
 | Campo     | Nombre completo          | Tipo                | Clave  | NULL |
 | --------- | ------------------------ | ------------------- | ------ | ---- |
 | id_sala   | Identificador de sala    | INT AUTO_INCREMENT  | PK     | NO   |
 | nombre    | Nombre de la sala        | VARCHAR(50)         | UNIQUE | NO   |
-
----
 
 #### `turnos_salas`
 
@@ -264,6 +256,7 @@ Se agregan vistas operativas y de reporte que se apoyan en las tablas existentes
   **Objetivo:** preservar integridad financiera.  
   **Tablas/situaciones:** `facturas` en INSERT/UPDATE.
 
+---
 
 ### Informes y análisis de datos
 
