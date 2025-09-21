@@ -160,8 +160,8 @@ El siguiente diagrama E‑R muestra la estructura lógica de la base de datos (p
 | id_factura | Factura pagada                             | INT                                                                  | FK → facturas(id_factura) | NO |
 | fecha      | Fecha del pago                             | DATE                                                                 | —     | NO   |
 | importe    | Importe del pago                           | DECIMAL(12,2)                                                        | —     | NO   |
-| medio_pago | Medio de pago (efectivo, débito, etc.)     | ENUM('efectivo','debito','credito','transferencia','obra_social')    | —     | NO   |
-| estado     | Estado del pago (aplicado, pendiente, etc.)| ENUM('aplicado','pendiente','rechazado')                             | —     | NO   |
+| medio_pago | Medio de pago     | ENUM('efectivo','debito','credito','transferencia','obra_social')    | —     | NO   |
+| estado     | Estado del pago | ENUM('aplicado','pendiente','rechazado')                             | —     | NO   |
 
 #### `salas`
 
