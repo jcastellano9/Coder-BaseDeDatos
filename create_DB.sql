@@ -62,3 +62,49 @@ CREATE TABLE IF NOT EXISTS obra_sociales (
   email VARCHAR(100),
   FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente)
 );
+
+-- Catálogo de prácticas
+CREATE TABLE IF NOT EXISTS practicas (
+  id_practica INT AUTO_INCREMENT PRIMARY KEY,
+  codigo VARCHAR(20) UNIQUE,
+  nombre VARCHAR(150) NOT NULL,
+  precio_base DECIMAL(12,2) NOT NULL
+);
+
+-- Detalle de factura
+CREATE TABLE IF NOT EXISTS facturas_detalle (
+  id_factura_detalle INT AUTO_INCREMENT PRIMARY KEY,
+  id_factura INT NOT NULL,
+  id_practica INT NOT NULL,
+  cantidad INT NOT NULL DEFAULT 1,
+  precio_unitario DECIMAL(12,2) NOT NULL,
+  subtotal DECIMAL(12,2) AS (cantidad * precio_unitario) STORED,
+  FOREIGN KEY (id_factura) REFERENCES facturas(id_factura),
+  FOREIGN KEY (id_practica) REFERENCES practicas(id_practica)
+);
+
+-- Pagos aplicados a facturas
+CREATE TABLE IF NOT EXISTS pagos (
+  id_pago INT AUTO_INCREMENT PRIMARY KEY,
+  id_factura INT NOT NULL,
+  fecha DATE NOT NULL,
+  importe DECIMAL(12,2) NOT NULL,
+  medio_pago ENUM('efectivo','debito','credito','transferencia','obra_social') NOT NULL,
+  estado ENUM('aplicado','pendiente','rechazado') NOT NULL DEFAULT 'aplicado',
+  FOREIGN KEY (id_factura) REFERENCES facturas(id_factura)
+);
+
+-- Salas físicas de atención
+CREATE TABLE IF NOT EXISTS salas (
+  id_sala INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Asignación de sala al turno
+CREATE TABLE IF NOT EXISTS turnos_salas (
+  id_turno_sala INT AUTO_INCREMENT PRIMARY KEY,
+  id_turno INT NOT NULL,
+  id_sala INT NOT NULL,
+  FOREIGN KEY (id_turno) REFERENCES turnos(id_turno),
+  FOREIGN KEY (id_sala)  REFERENCES salas(id_sala)
+);

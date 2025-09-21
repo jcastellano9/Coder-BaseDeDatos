@@ -132,8 +132,62 @@ El siguiente diagrama E‑R muestra la estructura lógica de la base de datos (p
 | telefono         | Teléfono de contacto                    | VARCHAR(15)         | —                            | SÍ   |
 | email            | Correo de contacto                      | VARCHAR(100)        | —                            | SÍ   |
 
+#### `practicas`
+
+| Campo        | Nombre completo                        | Tipo                | Clave  | NULL |
+| ------------ | --------------------------------------- | ------------------- | ------ | ---- |
+| id_practica  | Identificador de práctica              | INT AUTO_INCREMENT  | PK     | NO   |
+| codigo       | Código de práctica (único)             | VARCHAR(20)         | UNIQUE | NO   |
+| nombre       | Nombre de la práctica                  | VARCHAR(150)        | —      | NO   |
+| precio_base  | Precio base de la práctica             | DECIMAL(12,2)       | —      | NO   |
+
 ---
 
+#### `facturas_detalle`
+
+| Campo              | Nombre completo                       | Tipo                | Clave                        | NULL |
+| ------------------ | --------------------------------------| ------------------- | ---------------------------- | ---- |
+| id_factura_detalle | Identificador de detalle de factura    | INT AUTO_INCREMENT  | PK                           | NO   |
+| id_factura         | Factura asociada                      | INT                 | FK → facturas(id_factura)    | NO   |
+| id_practica        | Práctica facturada                    | INT                 | FK → practicas(id_practica)  | NO   |
+| cantidad           | Cantidad de prácticas                 | INT                 | —                             | NO   |
+| precio_unitario    | Precio unitario aplicado              | DECIMAL(12,2)       | —                             | NO   |
+| subtotal           | Subtotal calculado (cantidad × precio) | DECIMAL(12,2) STORED| —                             | NO   |
+
+---
+
+#### `pagos`
+
+| Campo      | Nombre completo                           | Tipo                                                                 | Clave | NULL |
+| ---------- | ------------------------------------------ | -------------------------------------------------------------------- | ----- | ---- |
+| id_pago    | Identificador de pago                     | INT AUTO_INCREMENT                                                   | PK    | NO   |
+| id_factura | Factura pagada                             | INT                                                                  | FK → facturas(id_factura) | NO |
+| fecha      | Fecha del pago                             | DATE                                                                 | —     | NO   |
+| importe    | Importe del pago                           | DECIMAL(12,2)                                                        | —     | NO   |
+| medio_pago | Medio de pago (efectivo, débito, etc.)     | ENUM('efectivo','debito','credito','transferencia','obra_social')    | —     | NO   |
+| estado     | Estado del pago (aplicado, pendiente, etc.)| ENUM('aplicado','pendiente','rechazado')                             | —     | NO   |
+
+---
+
+#### `salas`
+
+| Campo     | Nombre completo          | Tipo                | Clave  | NULL |
+| --------- | ------------------------ | ------------------- | ------ | ---- |
+| id_sala   | Identificador de sala    | INT AUTO_INCREMENT  | PK     | NO   |
+| nombre    | Nombre de la sala        | VARCHAR(50)         | UNIQUE | NO   |
+
+---
+
+#### `turnos_salas`
+
+| Campo           | Nombre completo            | Tipo               | Clave                       | NULL |
+| --------------- | ---------------------------| ------------------ | --------------------------- | ---- |
+| id_turno_sala   | Identificador de turno-sala | INT AUTO_INCREMENT | PK                          | NO   |
+| id_turno        | Turno asignado             | INT                | FK → turnos(id_turno)       | NO   |
+| id_sala         | Sala en la que se atiende  | INT                | FK → salas(id_sala)         | NO   |
+
+
+---
 
 ## Vistas
 
@@ -209,6 +263,20 @@ Se agregan vistas operativas y de reporte que se apoyan en las tablas existentes
 - **trg_facturas_total_ins / trg_facturas_total_upd** — Evitan montos negativos.  
   **Objetivo:** preservar integridad financiera.  
   **Tablas/situaciones:** `facturas` en INSERT/UPDATE.
+
+
+### Informes y análisis de datos
+
+A partir de las vistas y consultas SQL del proyecto se generaron reportes en formato `.csv` (carpeta **informes** del repositorio).  
+Estos reportes brindan una visión cuantitativa de la actividad de la clínica:
+
+- **Facturación mensual total**: evolución de los ingresos mes a mes.
+- **Prácticas más facturadas**: ranking de las atenciones de mayor facturación.
+- **Pacientes con mayor facturación acumulada**: identifica los pacientes que concentran mayor gasto.
+- **Turnos por especialidad médica**: distribución y demanda de las distintas especialidades.
+
+Los resultados permiten detectar picos de demanda, especialidades más solicitadas y patrones de facturación, sirviendo como base para decisiones de gestión y planificación.
+
 
 
 ## TÉCNICO

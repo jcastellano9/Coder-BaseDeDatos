@@ -105,3 +105,58 @@ INSERT INTO facturas (id_factura, id_paciente, fecha, total) VALUES
 (102,2,DATE_ADD(CURDATE(), INTERVAL 1 DAY),95000.00),
 (103,3,DATE_ADD(CURDATE(), INTERVAL 3 DAY),125000.00),
 (104,5,DATE_ADD(CURDATE(), INTERVAL 5 DAY),210000.00);
+
+-- =========================
+-- Prácticas (catálogo)
+-- =========================
+INSERT INTO practicas (id_practica, codigo, nombre, precio_base) VALUES
+(1,'OCT001','Tomografía de coherencia óptica',30000.00),
+(2,'RET002','Fondo de ojo con retinografía',15000.00),
+(3,'COR003','Topografía corneal',20000.00),
+(4,'GLA004','Tonometría de aplanación',12000.00),
+(5,'VIS005','Control de agudeza visual',8000.00);
+
+-- =========================
+-- Salas físicas de atención
+-- =========================
+INSERT INTO salas (id_sala, nombre) VALUES
+(1,'Consultorio 1'),
+(2,'Consultorio 2'),
+(3,'Consultorio 3'),
+(4,'Quirófano A'),
+(5,'Quirófano B');
+
+-- =========================
+-- Turnos-Salas (asignación de espacio)
+-- =========================
+INSERT INTO turnos_salas (id_turno_sala, id_turno, id_sala) VALUES
+(1,1,1),
+(2,2,2),
+(3,3,3),
+(4,4,1),
+(5,5,2),
+(6,6,3),
+(7,7,4),
+(8,8,5);
+
+-- =========================
+-- Detalle de Facturas
+-- =========================
+INSERT INTO facturas_detalle (id_factura_detalle, id_factura, id_practica, cantidad, precio_unitario) VALUES
+(1,1,5,1,8000.00),
+(2,1,2,1,15000.00),
+(3,2,3,1,20000.00),
+(4,3,1,1,30000.00),
+(5,4,4,2,12000.00),
+(6,5,2,1,15000.00);
+
+-- =========================
+-- Pagos (aplicados a facturas)
+-- =========================
+INSERT INTO pagos (id_pago, id_factura, fecha, importe, medio_pago, estado) VALUES
+(1,1,'2025-08-07',23000.00,'debito','aplicado'),
+(2,2,'2025-08-06',20000.00,'efectivo','aplicado'),
+(3,3,'2025-08-06',30000.00,'transferencia','aplicado'),
+(4,4,'2025-08-08',24000.00,'obra_social','aplicado'),
+(5,5,'2025-08-09',15000.00,'credito','aplicado'),
+(6,6,'2025-08-10',120000.00,'efectivo','aplicado');
