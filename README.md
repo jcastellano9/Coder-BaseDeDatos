@@ -288,6 +288,14 @@ Los resultados permiten detectar picos de demanda, especialidades más solicitad
   - `Turnos_por_especialidad.csv`  
   Incluyen los resultados de las vistas y consultas SQL, base de los gráficos y análisis presentados en el PDF final.
 
+
+## Herramientas y tecnologías utilizadas
+
+- **MySQL Workbench**: modelado y ejecución de la base de datos relacional, incluyendo vistas, funciones, procedimientos y triggers.
+- **GitHub**: repositorio para los scripts SQL y documentación.
+- **ChatGPT**: asistencia en la elaboración de documentación y datos de cada tabla.
+- **Sheets**: análisis exploratorio y exportación de los reportes desde las vistas SQL.
+
 ---
 <p align="center">
   <img src="assets/Coder-House-Logo.png" alt="Logo Coderhouse" height="120" style="margin-right: 40px;"/>
