@@ -282,6 +282,12 @@ Los resultados permiten detectar picos de demanda, especialidades más solicitad
 - [*`funciones.sql`*](funciones.sql): define funciones utilitarias (fn_edad, fn_nombre_completo, fn_turno_datetime, fn_total_mes).
 - [*`stored_procedures.sql`*](stored_procedures.sql): define procedimientos almacenados (sp_agendar_turno, sp_cancelar_turno, sp_registrar_factura, sp_actualizar_datos_paciente).
 - [*`triggers.sql`*](triggers.sql): define triggers de integridad/normalización (emails en pacientes, fechas en tratamientos, agenda en turnos, montos en facturas).
+- [*`informes/`*](informes): carpeta con las consultas exportadas en CSV  
+  - `Facturacion_mensual_total.csv`  
+  - `Practicas_mas_facturadas.csv`  
+  - `Pacientes_mayor_facturacion.csv`  
+  - `Turnos_por_especialidad.csv`  
+  Incluyen los resultados de las vistas y consultas SQL, base de los gráficos y análisis presentados en el PDF final.
 
 ---
 <p align="center">
