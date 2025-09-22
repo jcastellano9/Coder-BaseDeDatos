@@ -5,7 +5,7 @@
 </p>
 
 **Autor:** Castellano Joaquín  
-**Tutor:** Alejandro Daniel Di Stefano  
+**Tutor:** Leonel Lo Presti / Jennifer Goldfeld 
 **Comisión:** 81830  
 **Versión:** 3.0  
 
